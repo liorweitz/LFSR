@@ -1,23 +1,27 @@
-import bits.functions.Function;
-
 /**
  * this class will represent the lfsr, the shifter. the stream will contain the output bits that will be taken from the state StateVector.
- * the Function will be the operation that will act upon the taps bits to generate the new bit.
+ * the bitGenerator will be responsible to generate the new bit.
  * the matrix is the generator of movement, of the shifting and the generating of the new bit. it is for now redundant.
  */
 import java.util.Vector;
 public class CoreLfsrImpl implements CoreLfsr{
     private Vector<Integer> stream;
-    private Function func;
+    private BitGenerator bitGenerator;
     private StateVector taps;
     private StateVector state;
     private Matrix matrix;
 
-    public CoreLfsrImpl(StateVector seed, StateVector taps, Function func){
+    /**
+     * constructor. the seed is the initializing vector. the state StateVector will be referenced to it.
+     * @param seed
+     * @param taps
+     * @param bitGenerator
+     */
+    public CoreLfsrImpl(StateVector seed, StateVector taps, BitGenerator bitGenerator){
         this.state=seed;
         this.taps=taps;
         stream=new Vector<Integer>();
-        this.func=func;
+        this.bitGenerator=bitGenerator;
         matrix=new MatrixImpl(seed.getSize(), seed.getSize());
         setupMatrix(taps);
     }
@@ -31,7 +35,7 @@ public class CoreLfsrImpl implements CoreLfsr{
 
     @Override
     public int step() {
-        int newBit=generateNewBit();
+        int newBit=bitGenerator.generate(state, taps);
         for (int i=1; i< state.getSize();i++){
             state.setVal(i,state.getVal(i=1));
         }
@@ -40,18 +44,14 @@ public class CoreLfsrImpl implements CoreLfsr{
         return 1;
     }
 
-    private int generateNewBit() {
-        StateVector temp=state.bitWiseMult(taps);
-        int newBit=temp.getVal(0);
-        for (int i=1; i< temp.getSize();i++){
-            newBit=func.act(newBit,temp.getVal(i));
-        }
-        return newBit;
-    }
-
     @Override
     public Vector<Integer> generate(int k) {
         return null;
+    }
+
+    @Override
+    public int findMaxPeriodicity() {
+        return 0;
     }
 
     @Override

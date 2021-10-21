@@ -6,7 +6,7 @@ public class Main {
         Polynom pol=new Polynom(new double[] {0,1,1,1});
         System.out.println(pol);
 
-        Polynom sub=new Polynom(new double[] {1});
+        Polynom sub=new Polynom(new double[] {0,1,1});
         System.out.println(sub);
         System.out.println(pol.divide(sub));
 //        System.out.println(pol.subtract(sub));

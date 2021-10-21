@@ -88,7 +88,7 @@ public class Polynom {
 
     /**
      * this method is for the use of the long division. it is used only to shift the powers according to the
-     * qoutient last found term.
+     * qoutient's last found term.
      * @param quotientIndex
      * @return polynom of equal or higher order.
      */
@@ -110,8 +110,8 @@ public class Polynom {
      * @throws Exception
      */
     public int findNextQuotient(Polynom dividend, Polynom divisor) throws Exception {
-        if (divisor.poly.length>this.poly.length){
-            throw new Exception(new ArithmeticException(""));
+        if (divisor.poly.length>dividend.poly.length){
+            throw new Exception(new ArithmeticException("It is not dividable"));
         }
         else{
             return dividend.poly.length-divisor.poly.length;
