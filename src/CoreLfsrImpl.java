@@ -1,5 +1,10 @@
 import bits.functions.Function;
 
+/**
+ * this class will represent the lfsr, the shifter. the stream will contain the output bits that will be taken from the state StateVector.
+ * the Function will be the operation that will act upon the taps bits to generate the new bit.
+ * the matrix is the generator of movement, of the shifting and the generating of the new bit. it is for now redundant.
+ */
 import java.util.Vector;
 public class CoreLfsrImpl implements CoreLfsr{
     private Vector<Integer> stream;
