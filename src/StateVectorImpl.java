@@ -1,8 +1,14 @@
+import java.util.Arrays;
+
 public class StateVectorImpl implements StateVector{
     private int [] vec;
 
     public StateVectorImpl(int size){
         vec=new int[size];
+    }
+
+    public StateVectorImpl(int[] arr){
+        vec=arr;
     }
 
     @Override
@@ -18,6 +24,11 @@ public class StateVectorImpl implements StateVector{
     @Override
     public int getOutputbit() {
         return 0;
+    }
+
+    @Override
+    public int[] getArray() {
+        return vec;
     }
 
     @Override
@@ -53,5 +64,9 @@ public class StateVectorImpl implements StateVector{
             res.setVal(i,val);
         }
         return res;
+    }
+
+    public String toString(){
+        return Arrays.toString(vec);
     }
 }

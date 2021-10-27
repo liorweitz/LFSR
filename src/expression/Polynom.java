@@ -17,6 +17,14 @@ public class Polynom {
         poly=other;
     }
 
+    public Polynom(int[] array) {
+        double[] temp=new double[array.length];
+        for (int i=0; i<array.length; i++){
+            temp[i]=array[i];
+        }
+        new Polynom(temp);
+    }
+
     private void initialize() {
         for (int i=0;i<poly.length-1;i++){
             poly[i]=0;
@@ -73,17 +81,36 @@ public class Polynom {
      * @return  quotient
      * @throws Exception
      */
-    public Polynom divide(Polynom divisor) throws Exception {
+    public Polynom divide(Polynom divisor)  {
         Polynom dividend=new Polynom(this.poly);
         int maxPower=Math.max(dividend.poly.length, divisor.poly.length);
         Polynom quotient=new Polynom(maxPower);
         while (!(dividend.poly.length==1 && dividend.poly[0]==0)){
             int quotientIndex=findNextQuotient(dividend,divisor);
+            if (quotientIndex==-1){
+                return null;
+            }
             quotient.setCoef(quotientIndex,1);
             Polynom temp=(divisor.multiplyByMono(quotientIndex));
             dividend=dividend.subtract(temp);
         }
         return quotient.decreaseToLeading();
+    }
+
+    /**
+     *
+     * @param dividend
+     * @param divisor
+     * @return index of the quotient. it is found from the subtraction of the leading powers.
+     * @throws Exception
+     */
+    public int findNextQuotient(Polynom dividend, Polynom divisor) {
+        if (divisor.poly.length>dividend.poly.length){
+            return -1;
+        }
+        else{
+            return dividend.poly.length-divisor.poly.length;
+        }
     }
 
     /**
@@ -100,22 +127,6 @@ public class Polynom {
             }
         }
         return temp;
-    }
-
-    /**
-     *
-     * @param dividend
-     * @param divisor
-     * @return index of the quotient. it is found from the subtraction of the leading powers.
-     * @throws Exception
-     */
-    public int findNextQuotient(Polynom dividend, Polynom divisor) throws Exception {
-        if (divisor.poly.length>dividend.poly.length){
-            throw new Exception(new ArithmeticException("It is not dividable"));
-        }
-        else{
-            return dividend.poly.length-divisor.poly.length;
-        }
     }
 
     public String toString(){

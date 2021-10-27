@@ -1,14 +1,29 @@
 import expression.Polynom;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) throws Exception {
+        StateVector seed=new StateVectorImpl(8);
+        seed.setVal(0,1);
+        StateVector taps=new StateVectorImpl(new int[]{0,0,0,0,0,0,0,1});
+        BitGenerator bitGenerator=new XorBitGenerator();
+        CoreLfsr lfsr=new CoreLfsrImpl(seed,taps,bitGenerator);
 
-        Polynom pol=new Polynom(new double[] {0,1,1,1});
-        System.out.println(pol);
+        System.out.println(lfsr.getState());
+        for (int i=1; i<=50;i++){
+            lfsr.step();
+            System.out.println(lfsr.getState());
+        }
 
-        Polynom sub=new Polynom(new double[] {0,1,1});
-        System.out.println(sub);
-        System.out.println(pol.divide(sub));
+//        System.out.println(lfsr.findMaxPeriodicity());
+
+//        Polynom pol=new Polynom(new double[] {0,1,1,1});
+//        System.out.println(pol);
+//
+//        Polynom sub=new Polynom(new double[] {0,1,1});
+//        System.out.println(sub);
+//        System.out.println(pol.divide(sub));
 //        System.out.println(pol.subtract(sub));
 
 

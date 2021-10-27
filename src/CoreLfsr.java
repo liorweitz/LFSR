@@ -1,6 +1,8 @@
 import java.util.Vector;
 
 public interface CoreLfsr {
+
+    public StateVector getState();
     /**
      * making one step of the lfsr (shifting and generating new bit).
      * in each step the output bit is saved.
@@ -20,7 +22,7 @@ public interface CoreLfsr {
      * calculate the maximum periodicity of the current configuration.
      * @return int representing the maximum periodicity.
      */
-    public int findMaxPeriodicity();
+    public int findMaxPeriodicity() throws Exception;
 
     /**
      * returning a string representing the stream of output bits.

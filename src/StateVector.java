@@ -7,6 +7,7 @@ public interface StateVector {
     public int getVal(int loc);
     public int getSize();
     public int getOutputbit();
+    public int[] getArray();
 
     public void setVal(int loc, int val);
 
