@@ -1,3 +1,6 @@
+import expression.Polynom;
+import java.util.LinkedList;
+import java.util.Vector;
 /**
  * this class will represent the lfsr, the shifter. the stream will contain the output bits that will be taken from the state StateVector.
  * the bitGenerator will be responsible to generate the new bit.
@@ -5,29 +8,23 @@
  * the matrix is the generator of movement, of the shifting and the generating of the new bit. it is for now redundant.
  * taps bits correspond from left to right to a1,a2,...,an.
  */
-import expression.Polynom;
-
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Vector;
 public class CoreLfsrImpl implements CoreLfsr{
-    private Vector<Integer> stream;
-    private BitGenerator bitGenerator;
-    private StateVector taps;
+    private final Vector<Integer> stream;
+    private final BitGenerator bitGenerator;
+    private final StateVector taps;
     private Polynom characteristicPol;
-    private StateVector state;
-//    private Matrix matrix;
+    private final StateVector state;
 
     /**
      * constructor. the seed is the initializing vector. the state StateVector will be referenced to it.
-     * @param seed
-     * @param taps
-     * @param bitGenerator
+     * @param seed is initial state.
+     * @param taps represent from left to right a1,a2,...,an.
+     * @param bitGenerator the action taken with the taps.
      */
     public CoreLfsrImpl(StateVector seed, StateVector taps, BitGenerator bitGenerator){
         this.state=seed;
         this.taps=taps;
-        stream=new Vector<Integer>();
+        stream= new Vector<>();
         this.bitGenerator=bitGenerator;
         generateCharacteristicPol(taps);
     }
@@ -35,7 +32,7 @@ public class CoreLfsrImpl implements CoreLfsr{
     public CoreLfsrImpl(CoreLfsrImpl other){
         this.state=new StateVectorImpl(other.state.getArray());
         this.bitGenerator=other.bitGenerator;
-        this.stream=new Vector<Integer>();
+        this.stream= new Vector<>();
         this.taps=new StateVectorImpl(other.taps.getArray());
         generateCharacteristicPol(other.taps);
     }
@@ -67,19 +64,20 @@ public class CoreLfsrImpl implements CoreLfsr{
     }
 
     @Override
-    public int step() {
+    public void step() {
         int newBit=bitGenerator.generate(state, taps);
         for (int i=state.getSize()-1; i>=1;i--){
             state.setVal(i,state.getVal(i-1));
         }
         state.setVal(0,newBit);
         stream.add(state.getVal(state.getSize()-1));
-        return 1;
     }
 
     @Override
-    public Vector<Integer> generate(int k) {
-        return null;
+    public void generate(int k) {
+        for (int i=1;i<=k;i++){
+            step();
+        }
     }
 
     @Override
@@ -106,7 +104,7 @@ public class CoreLfsrImpl implements CoreLfsr{
 
     /**
      * checks if the alleged period is divisible by the characteristic polynom.
-     * @param allegedPeriod
+     * @param allegedPeriod the suspected period.
      * @return true if divisible, false else.
      */
     private boolean checkDivisionForAllegedPeriodicity(int allegedPeriod){
@@ -114,16 +112,14 @@ public class CoreLfsrImpl implements CoreLfsr{
         periodPol.setCoef(allegedPeriod,1);
         periodPol.setCoef(0,1);
         Polynom quotient=periodPol.divide(characteristicPol);
-        if (quotient==null)
-            return false;
-        return true;
+        return quotient != null;
     }
 
     /**
      * checks if the factors of alleged period are divisible by characteristic polynom. it is redundant to use it
      * by findMaxPeriodicity but maybe later version will have a "im feeling lucky" find max period.
      *
-     * @param allegedPeriod
+     * @param allegedPeriod is suspected period
      * @return false if no factor is divisible, true else.
      */
     private boolean checkDivisionOfFactorsOfPeriod(int allegedPeriod) {
@@ -161,10 +157,8 @@ public class CoreLfsrImpl implements CoreLfsr{
 
     @Override
     public String toString(){
-        StringBuilder sb=new StringBuilder();
-        sb.append("current state: " + state + "\n");
-        sb.append("Characteristic Polynom " + characteristicPol + "\n");
-        sb.append("current key Stream: " + stream);
-        return sb.toString();
+        return "current state: " + state + "\n" +
+                "Characteristic Polynom " + characteristicPol + "\n" +
+                "current key Stream: " + stream;
     }
 }

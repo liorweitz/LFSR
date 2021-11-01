@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class StateVectorImpl implements StateVector{
-    private int [] vec;
+    private final int [] vec;
 
     public StateVectorImpl(int size){
         vec=new int[size];

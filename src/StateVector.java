@@ -4,16 +4,16 @@
  * 2)
  */
 public interface StateVector {
-    public int getVal(int loc);
-    public int getSize();
-    public int getOutputbit();
-    public int[] getArray();
+    int getVal(int loc);
+    int getSize();
+    int getOutputbit();
+    int[] getArray();
 
-    public void setVal(int loc, int val);
+    void setVal(int loc, int val);
 
-    public int scalarMult(StateVector other);
-    public StateVector bitWiseMult(StateVector other);
-    public StateVector matrixMult(Matrix m);
+    int scalarMult(StateVector other);
+    StateVector bitWiseMult(StateVector other);
+    StateVector matrixMult(Matrix m);
 
     int toInt();
 }

@@ -3,5 +3,5 @@
  * will be multiple tools for generating.
  */
 public interface BitGenerator {
-    public int generate(StateVector state, StateVector taps);
+    int generate(StateVector state, StateVector taps);
 }

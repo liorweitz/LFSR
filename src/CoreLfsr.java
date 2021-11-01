@@ -2,36 +2,34 @@ import java.util.Vector;
 
 public interface CoreLfsr {
 
-    public Vector<Integer> getStream();
+    Vector<Integer> getStream();
 
-    public StateVector getState();
+    StateVector getState();
     /**
      * making one step of the lfsr (shifting and generating new bit).
      * in each step the output bit is saved.
-     * @return output bit
      */
-    public int step();
+    void step();
 
     /**
      * perform k steps.
      * @param k is the number of steps to perform.
-     * @return a vector containing the output bits.
      */
-    public Vector<Integer> generate(int k);
+    void generate(int k);
 
     /**
      * after the initialization of the lfsr (initializing vector and taps) this method will
      * calculate the maximum periodicity of the current configuration.
      * @return int representing the maximum periodicity.
      */
-    public int findMaxPeriodicity() throws Exception;
+    int findMaxPeriodicity() throws Exception;
 
-    public int findPeriodicityByBruteForce();
+    int findPeriodicityByBruteForce();
 
     /**
      * returning a string representing the stream of output bits.
-     * @return
+     * @return String.
      */
-    public String toString();
+    String toString();
 
 }
