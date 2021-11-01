@@ -1,8 +1,14 @@
 public class Main {
     public static void main(String[] args) throws Exception {
+
+        //example:
+        //constructing the lfrs
         StateVector seed=new StateVectorImpl(4);
         seed.setVal(0,1);
-        StateVector taps=new StateVectorImpl(new int[]{1,1,1,0});
+        seed.setVal(1,1);
+        seed.setVal(2,1);
+        seed.setVal(3,1);
+        StateVector taps=new StateVectorImpl(new int[]{0,0,0,1});
         BitGenerator bitGenerator=new XorBitGenerator();
         CoreLfsr lfsr=new CoreLfsrImpl(seed,taps,bitGenerator);
 
