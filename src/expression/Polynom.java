@@ -62,7 +62,7 @@ public class Polynom {
      *
      * @return a polynom of leading order from the origin polynom which might contain zeroes.
      */
-    private Polynom decreaseToLeading() {
+    public Polynom decreaseToLeading() {
         int leadingPower;
         for (leadingPower=this.poly.length-1; leadingPower>=0; leadingPower--){
             if (poly[leadingPower]==1 || leadingPower==0)
@@ -83,7 +83,7 @@ public class Polynom {
      */
     public Polynom divide(Polynom divisor)  {
         Polynom dividend=new Polynom(this.poly);
-        int maxPower=Math.max(dividend.poly.length, divisor.poly.length);
+        int maxPower=Math.max(dividend.poly.length-1, divisor.poly.length-1);
         Polynom quotient=new Polynom(maxPower);
         while (!(dividend.poly.length==1 && dividend.poly[0]==0)){
             int quotientIndex=findNextQuotient(dividend,divisor);

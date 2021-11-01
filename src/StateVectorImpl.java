@@ -66,6 +66,15 @@ public class StateVectorImpl implements StateVector{
         return res;
     }
 
+    @Override
+    public int toInt() {
+        int res=0;
+        for (int i=0;i<=vec.length-1;i++){
+            res+=vec[i]*Math.pow(2,vec.length-1-i);
+        }
+        return res;
+    }
+
     public String toString(){
         return Arrays.toString(vec);
     }

@@ -14,4 +14,6 @@ public interface StateVector {
     public int scalarMult(StateVector other);
     public StateVector bitWiseMult(StateVector other);
     public StateVector matrixMult(Matrix m);
+
+    int toInt();
 }
